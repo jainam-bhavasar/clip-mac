@@ -15,6 +15,13 @@ struct clip_macApp: App {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .onAppear{
+                    DispatchQueue.global(qos:.userInitiated).async {
+                        ModelManager.shared
+                    }
+                }
         }
     }
+    
+    
 }
