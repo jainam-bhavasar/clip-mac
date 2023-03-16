@@ -17,7 +17,7 @@ struct clip_macApp: App {
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .onAppear{
                     DispatchQueue.global(qos:.userInitiated).async {
-                        ModelManager.shared
+                        gitTest()
                     }
                 }
         }

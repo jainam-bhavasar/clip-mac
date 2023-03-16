@@ -7,10 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A0123D6229AFF13A004C2710 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0123D6129AFF13A004C2710 /* ContentViewController.swift */; };
+		A0123D6229AFF13A004C2710 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0123D6129AFF13A004C2710 /* ContentViewModel.swift */; };
 		A0132A0229AD34B600C6DAB1 /* input.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = A01329FD29AD313400C6DAB1 /* input.png */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		A0132A0429AD3A6300C6DAB1 /* createPixelBufferFromCIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0132A0329AD3A6300C6DAB1 /* createPixelBufferFromCIImage.swift */; };
-		A049765729B02674000D5DCF /* IndexingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A049765629B02674000D5DCF /* IndexingService.swift */; };
+		A02726B329B37E2600731682 /* GitTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02726B229B37E2600731682 /* GitTesting.swift */; };
 		A049765C29B036A4000D5DCF /* SimilarityImagePredictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A049765B29B036A4000D5DCF /* SimilarityImagePredictionView.swift */; };
 		A04A906B29AE9B8100314A6E /* SimilarityUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04A906A29AE9B8100314A6E /* SimilarityUtils.swift */; };
 		A077191729ABFB4900AB00B1 /* clip_macApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A077191629ABFB4900AB00B1 /* clip_macApp.swift */; };
@@ -23,11 +22,14 @@
 		A077193829ABFB4900AB00B1 /* clip_macUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A077193729ABFB4900AB00B1 /* clip_macUITests.swift */; };
 		A077193A29ABFB4900AB00B1 /* clip_macUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A077193929ABFB4900AB00B1 /* clip_macUITestsLaunchTests.swift */; };
 		A077194929ABFCA900AB00B1 /* PerformML.swift in Sources */ = {isa = PBXBuildFile; fileRef = A077194829ABFCA900AB00B1 /* PerformML.swift */; };
+		A07D532229C3410E00E1FF10 /* clip_vitb32.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = A0E91FA829AD17DE0076F7AE /* clip_vitb32.mlpackage */; };
 		A080980529AEA855003585B2 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = A080980429AEA855003585B2 /* Collections */; };
 		A080980729AEA855003585B2 /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = A080980629AEA855003585B2 /* DequeModule */; };
 		A080980929AEA855003585B2 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = A080980829AEA855003585B2 /* OrderedCollections */; };
 		A080980C29AEAE42003585B2 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A080980B29AEAE42003585B2 /* ModelManager.swift */; };
-		A0E91FA929AD17DE0076F7AE /* clip_vitb32.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = A0E91FA829AD17DE0076F7AE /* clip_vitb32.mlpackage */; };
+		A082405329B29E810045DD30 /* MD5HashingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A082405229B29E810045DD30 /* MD5HashingService.swift */; };
+		A082405629B2A4C20045DD30 /* ImageFileModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A082405429B2A4C20045DD30 /* ImageFileModel.xcdatamodeld */; };
+		A0F2F7E029C32D5200736220 /* SwiftDraw in Frameworks */ = {isa = PBXBuildFile; productRef = A0F2F7DF29C32D5200736220 /* SwiftDraw */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,10 +63,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A0123D6129AFF13A004C2710 /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
+		A0123D6129AFF13A004C2710 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		A01329FD29AD313400C6DAB1 /* input.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = input.png; path = ../../Downloads/input.png; sourceTree = "<group>"; };
-		A0132A0329AD3A6300C6DAB1 /* createPixelBufferFromCIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createPixelBufferFromCIImage.swift; sourceTree = "<group>"; };
-		A049765629B02674000D5DCF /* IndexingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexingService.swift; sourceTree = "<group>"; };
+		A02726B229B37E2600731682 /* GitTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitTesting.swift; sourceTree = "<group>"; };
 		A049765B29B036A4000D5DCF /* SimilarityImagePredictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarityImagePredictionView.swift; sourceTree = "<group>"; };
 		A04A906A29AE9B8100314A6E /* SimilarityUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarityUtils.swift; sourceTree = "<group>"; };
 		A077191329ABFB4900AB00B1 /* clip-mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "clip-mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,6 +83,8 @@
 		A077193929ABFB4900AB00B1 /* clip_macUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = clip_macUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A077194829ABFCA900AB00B1 /* PerformML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformML.swift; sourceTree = "<group>"; };
 		A080980B29AEAE42003585B2 /* ModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
+		A082405229B29E810045DD30 /* MD5HashingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MD5HashingService.swift; sourceTree = "<group>"; };
+		A082405529B2A4C20045DD30 /* ImageFileModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageFileModel.xcdatamodel; sourceTree = "<group>"; };
 		A0E91FA829AD17DE0076F7AE /* clip_vitb32.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = clip_vitb32.mlpackage; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -90,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0F2F7E029C32D5200736220 /* SwiftDraw in Frameworks */,
 				A080980529AEA855003585B2 /* Collections in Frameworks */,
 				A080980729AEA855003585B2 /* DequeModule in Frameworks */,
 				A080980929AEA855003585B2 /* OrderedCollections in Frameworks */,
@@ -113,6 +117,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A02726B129B37E1300731682 /* Experiments */ = {
+			isa = PBXGroup;
+			children = (
+				A02726B229B37E2600731682 /* GitTesting.swift */,
+			);
+			path = Experiments;
+			sourceTree = "<group>";
+		};
 		A049765A29B03693000D5DCF /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,7 +137,6 @@
 			isa = PBXGroup;
 			children = (
 				A04A906A29AE9B8100314A6E /* SimilarityUtils.swift */,
-				A049765629B02674000D5DCF /* IndexingService.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -155,8 +166,11 @@
 		A077191529ABFB4900AB00B1 /* clip-mac */ = {
 			isa = PBXGroup;
 			children = (
+				A07D532129C340CA00E1FF10 /* ViewModels */,
+				A02726B129B37E1300731682 /* Experiments */,
+				A082405129B29E6B0045DD30 /* Cache */,
 				A049765A29B03693000D5DCF /* Views */,
-				A080980A29AEAE33003585B2 /* Model */,
+				A080980A29AEAE33003585B2 /* MLModel */,
 				A04A906929AE9B6700314A6E /* utils */,
 				A077191629ABFB4900AB00B1 /* clip_macApp.swift */,
 				A077191829ABFB4900AB00B1 /* ContentView.swift */,
@@ -166,8 +180,6 @@
 				A077192129ABFB4900AB00B1 /* clip_mac.xcdatamodeld */,
 				A077191C29ABFB4900AB00B1 /* Preview Content */,
 				A077194829ABFCA900AB00B1 /* PerformML.swift */,
-				A0132A0329AD3A6300C6DAB1 /* createPixelBufferFromCIImage.swift */,
-				A0123D6129AFF13A004C2710 /* ContentViewController.swift */,
 			);
 			path = "clip-mac";
 			sourceTree = "<group>";
@@ -197,12 +209,29 @@
 			path = "clip-macUITests";
 			sourceTree = "<group>";
 		};
-		A080980A29AEAE33003585B2 /* Model */ = {
+		A07D532129C340CA00E1FF10 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				A0123D6129AFF13A004C2710 /* ContentViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		A080980A29AEAE33003585B2 /* MLModel */ = {
 			isa = PBXGroup;
 			children = (
 				A080980B29AEAE42003585B2 /* ModelManager.swift */,
 			);
-			path = Model;
+			path = MLModel;
+			sourceTree = "<group>";
+		};
+		A082405129B29E6B0045DD30 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				A082405229B29E810045DD30 /* MD5HashingService.swift */,
+				A082405429B2A4C20045DD30 /* ImageFileModel.xcdatamodeld */,
+			);
+			path = Cache;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,6 +255,7 @@
 				A080980429AEA855003585B2 /* Collections */,
 				A080980629AEA855003585B2 /* DequeModule */,
 				A080980829AEA855003585B2 /* OrderedCollections */,
+				A0F2F7DF29C32D5200736220 /* SwiftDraw */,
 			);
 			productName = "clip-mac";
 			productReference = A077191329ABFB4900AB00B1 /* clip-mac.app */;
@@ -304,6 +334,7 @@
 			mainGroup = A077190A29ABFB4900AB00B1;
 			packageReferences = (
 				A080980329AEA855003585B2 /* XCRemoteSwiftPackageReference "swift-collections" */,
+				A0F2F7DE29C32D5200736220 /* XCRemoteSwiftPackageReference "SwiftDraw" */,
 			);
 			productRefGroup = A077191429ABFB4900AB00B1 /* Products */;
 			projectDirPath = "";
@@ -347,18 +378,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A07D532229C3410E00E1FF10 /* clip_vitb32.mlpackage in Sources */,
 				A049765C29B036A4000D5DCF /* SimilarityImagePredictionView.swift in Sources */,
-				A0123D6229AFF13A004C2710 /* ContentViewController.swift in Sources */,
+				A0123D6229AFF13A004C2710 /* ContentViewModel.swift in Sources */,
 				A04A906B29AE9B8100314A6E /* SimilarityUtils.swift in Sources */,
 				A077194929ABFCA900AB00B1 /* PerformML.swift in Sources */,
-				A0132A0429AD3A6300C6DAB1 /* createPixelBufferFromCIImage.swift in Sources */,
 				A077192029ABFB4900AB00B1 /* Persistence.swift in Sources */,
+				A082405329B29E810045DD30 /* MD5HashingService.swift in Sources */,
 				A077192329ABFB4900AB00B1 /* clip_mac.xcdatamodeld in Sources */,
-				A049765729B02674000D5DCF /* IndexingService.swift in Sources */,
 				A080980C29AEAE42003585B2 /* ModelManager.swift in Sources */,
-				A0E91FA929AD17DE0076F7AE /* clip_vitb32.mlpackage in Sources */,
+				A02726B329B37E2600731682 /* GitTesting.swift in Sources */,
 				A077191929ABFB4900AB00B1 /* ContentView.swift in Sources */,
 				A077191729ABFB4900AB00B1 /* clip_macApp.swift in Sources */,
+				A082405629B2A4C20045DD30 /* ImageFileModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,6 +545,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "clip-mac/clip_mac.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -540,6 +573,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "clip-mac/clip_mac.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -683,6 +717,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		A0F2F7DE29C32D5200736220 /* XCRemoteSwiftPackageReference "SwiftDraw" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/swhitty/SwiftDraw.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.6;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -701,6 +743,11 @@
 			package = A080980329AEA855003585B2 /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = OrderedCollections;
 		};
+		A0F2F7DF29C32D5200736220 /* SwiftDraw */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0F2F7DE29C32D5200736220 /* XCRemoteSwiftPackageReference "SwiftDraw" */;
+			productName = SwiftDraw;
+		};
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
@@ -711,6 +758,16 @@
 			);
 			currentVersion = A077192229ABFB4900AB00B1 /* clip_mac.xcdatamodel */;
 			path = clip_mac.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		A082405429B2A4C20045DD30 /* ImageFileModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A082405529B2A4C20045DD30 /* ImageFileModel.xcdatamodel */,
+			);
+			currentVersion = A082405529B2A4C20045DD30 /* ImageFileModel.xcdatamodel */;
+			path = ImageFileModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

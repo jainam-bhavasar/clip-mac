@@ -8,37 +8,62 @@
 import SwiftUI
 import CoreData
 import CoreML
-
+import CommonCrypto
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @ObservedObject var model : ContentModel = ContentModel()
+    @StateObject var model : ContentModel = ContentModel()
     let testImage :URL = Bundle.main.urlForImageResource("input")!
     let indexedEmbeddings : [MLMultiArray] = []
-    
+    private var columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+
     
     
     var body: some View {
         ScrollView(.vertical){
             VStack{
-                List(model.top10Predictions ?? [],id: \.id){ sip in
-                    Text(sip.imagePrediction.path)
-                }
                 Spacer()
                 Button((model.directory_path ?? "Pick Directory")) {
                     onPickDirectoryButtonTap()
                 }
                 Text(model.indexing_status ?? "" )
-                if let nsImage = NSImage(contentsOf: model.image_url ) {
-                    Image(nsImage: nsImage)
-                        .resizable()
-                        .frame(width: 200,height: 200.0)
-                        .onTapGesture {
-                            print(model.top10Predictions?.count)
+
+                if( !model.top10Predictions.isEmpty){
+                    Text("Input Image")
+                    if let nsImage = NSImage(contentsOf: model.image_url ) {
+                        Image(nsImage: nsImage)
+                            .resizable()
+                            .frame(width: 200,height: 200.0)
+                            .onTapGesture(count:2){
+                                pickImage()
+                            }
+                    }
+                    Text("Resuts")
+                }
+               
+
+                LazyVGrid(columns:[GridItem(.adaptive(minimum: 200),spacing: 0)]){
+                    ForEach(model.top10Predictions){ sip in
+                        VStack{
+                            if let nsImage = NSImage(contentsOf: URL(fileURLWithPath: sip.imagePrediction.path) ) {
+                                Image(nsImage: nsImage)
+                                    .resizable()
+                                    .frame(width: 200,height: 200.0)
+                                    .onTapGesture(count:2) {
+                                        let workspace = NSWorkspace.shared
+                                        let fileURL = URL(fileURLWithPath: sip.imagePrediction.path)
+                                        workspace.activateFileViewerSelecting([fileURL])
+                                    }.shadow(radius: 10)
+                                Text(sip.imagePrediction.path.replacingOccurrences(of: model.directory_path ?? " ", with: "")).textSelection(.enabled)
+                                Text(String(sip.similarity))
+                            }
                         }
+                       
+                    }
+
                 }
                 
-               // SimilarityImagePredictionView(similarityImagePredictions: model.top10Predictions ?? [])
+               
                 
                
             }.onDrop(of: [.fileURL],isTargeted: nil){ providers in
@@ -53,7 +78,6 @@ struct ContentView: View {
         if let provider = providers.first(where: { $0.canLoadObject(ofClass: URL.self) } ) {
             let _ = provider.loadObject(ofClass: URL.self) { object, error in
                 if let url = object {
-                    print("url: \(url)")
                     
                     DispatchQueue.main.async {
                         model.image_url = url
@@ -62,13 +86,11 @@ struct ContentView: View {
                             let top10SIP = SimilarityService.getTopKSimilarImagePredictions(
                                 indexed_predictions: model.predictions ?? [],
                                 queryPrediction:  ModelManager.shared.predict(path: model.image_url.path),
-                                k: 10)
+                                k: nil)
                             
                             model.top10Predictions = top10SIP
-//                            model.top10Predictions?.forEach{
-//                                model.indexing_status?.append($0.imagePrediction.path + "\n")
-//                            }
                             
+                                    
                         }
                     }
                     
@@ -95,6 +117,30 @@ struct ContentView: View {
         }
     }
     
+    fileprivate func pickImage(){
+        let dialog = NSOpenPanel();
+        dialog.canChooseDirectories = false;
+        dialog.canChooseFiles = true
+        if (dialog.runModal() ==  NSApplication.ModalResponse.OK) {
+            let result = dialog.url // Pathname of the file
+            if(result == nil) {return}
+            
+            model.image_url = result!
+            
+            if( model.predictions != nil){
+                let top10SIP = SimilarityService.getTopKSimilarImagePredictions(
+                    indexed_predictions: model.predictions ?? [],
+                    queryPrediction:  ModelManager.shared.predict(path: model.image_url.path),
+                    k: nil)
+                
+                model.top10Predictions = top10SIP
+//                            model.top10Predictions?.forEach{
+//                                model.indexing_status?.append($0.imagePrediction.path + "\n")
+//                            }
+                
+            }
+        }
+    }
     
     fileprivate func onPickDirectoryButtonTap() {
         pickDirectory()
@@ -115,16 +161,10 @@ struct ContentView: View {
                 let top10SIP = SimilarityService.getTopKSimilarImagePredictions(
                     indexed_predictions: predictions,
                     queryPrediction:  ModelManager.shared.predict(path: model.image_url.path),
-                    k: 10)
+                    k: nil)
                 
                 model.top10Predictions = top10SIP
-//                model.top10Predictions?.forEach{
-//                    model.indexing_status?.append($0.imagePrediction.path + "\n")
-//                }
-//                top10SIP.forEach{
-//                    print($0.imagePrediction.path)
-//                }
-                
+
                 
                 
             }

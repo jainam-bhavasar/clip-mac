@@ -31,20 +31,30 @@ class SimilarityService{
     }
     
     struct SimilarityImagePrediction :Identifiable {
-        let id  = UUID()
-        
-        
+        var id  = UUID()
         let imagePrediction : ImagePrediction
         let similarity : Double
     }
     
-    static func getTopKSimilarImagePredictions(indexed_predictions : [ImagePrediction],queryPrediction : ImagePrediction, k : Int) -> [SimilarityImagePrediction]{
+    static func getTopKSimilarImagePredictions(indexed_predictions : [ImagePrediction],queryPrediction : ImagePrediction, k : Int??) -> [SimilarityImagePrediction]{
         let similarities =  getSimilarityArray(indexed_enitities: indexed_predictions.map{$0.prediction}, query_entity: queryPrediction.prediction)
         let similarityImagePredictions = similarities.enumerated().map{SimilarityImagePrediction(imagePrediction: indexed_predictions[$0.offset], similarity: $0.element)}
         let top_k_sip = similarityImagePredictions.sorted{$0.similarity > $1.similarity}
-        return Array(top_k_sip[0...min(top_k_sip.count-1, k)])
+        return Array(top_k_sip[0...min(top_k_sip.count-1, (k ?? Int.max)!)])
         
     }
+    
+    fileprivate static func normalizeArray(arr: [Double]) -> [Double] {
+        // Find the minimum and maximum values in the array
+        guard let minVal = arr.min(), let maxVal = arr.max() else {
+            // If the array is empty, return an empty array
+            return []
+        }
+        
+        // Normalize each value in the array between 0 and 1
+        return arr.map { ($0 - minVal) / (maxVal - minVal) }
+    }
+
     
     
 }

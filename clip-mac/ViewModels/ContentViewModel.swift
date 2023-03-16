@@ -12,5 +12,5 @@ class ContentModel : ObservableObject{
     @Published var indexing_status : String?
     @Published var image_url : URL = Bundle.main.urlForImageResource("input")!
     @Published var predictions : [ImagePrediction]?
-    @Published var top10Predictions : [SimilarityService.SimilarityImagePrediction]?
+    @Published var top10Predictions  = [SimilarityService.SimilarityImagePrediction]()
 }

@@ -15,21 +15,14 @@ import Cocoa
 import Accelerate
 
 
-
+struct ImagePrediction {
+    let path : String
+    let prediction : MLMultiArray
+}
 
 func loadModel() -> clip_vitb32{
     let model = try! clip_vitb32(configuration: MLModelConfiguration())
     return model
-}
-
-
-
-
-
-struct ImagePrediction {
-    
-    let path : String
-    let prediction : MLMultiArray
 }
 
 func index_files(path:String?, progress : @escaping (Int,Int)->()) -> [ImagePrediction]{
@@ -37,7 +30,6 @@ func index_files(path:String?, progress : @escaping (Int,Int)->()) -> [ImagePred
     
     //Input
     let paths = getImagesDirectoryPaths(in: path!)
-            
     var predictions : [ImagePrediction] = []
     for (i,path) in paths.enumerated(){
         let prediction = ModelManager.shared.predict(path: path)
@@ -48,26 +40,20 @@ func index_files(path:String?, progress : @escaping (Int,Int)->()) -> [ImagePred
     
 }
 
-
-
 func getTopKSimilarImages(url : URL, indexedPredictions : [ImagePrediction]) -> [SimilarityService.SimilarityImagePrediction]{
     let queryPrediction = ModelManager.shared.predict(path: url.path)
     let top_k_sip : [SimilarityService.SimilarityImagePrediction] =
     SimilarityService.getTopKSimilarImagePredictions(indexed_predictions: indexedPredictions, queryPrediction: queryPrediction, k: 10)
-    print(top_k_sip)
     return top_k_sip
 }
-
 
 func getImagesDirectoryPaths(in directoryPath: String) -> [String] {
     let fm = FileManager.default
     guard let items = fm.enumerator(atPath: directoryPath)?.allObjects as? [String] else{
         return []
     }
-   
-    var images = items.filter{$0.hasSuffix("png") || $0.hasSuffix("jpg")}
+    var images = items.filter{$0.hasSuffix("png") || $0.hasSuffix("jpg") || $0.hasSuffix("svg")  }
     images = images.map{return "\(directoryPath)/\($0)" }
     return images
-    
 }
 
