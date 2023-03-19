@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "A4490667-0121-40AC-AFD8-ACB44B89558A",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:clip-mac.xcodeproj",
+        "identifier" : "A077193229ABFB4900AB00B1",
+        "name" : "clip-macUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

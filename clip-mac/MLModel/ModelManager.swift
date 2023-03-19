@@ -9,7 +9,7 @@ import Foundation
 import CoreML
 import SwiftDraw
 import AppKit
-
+import RealmSwift
  class ModelManager {
     static let shared = ModelManager()
     
@@ -46,6 +46,8 @@ import AppKit
          return ImagePrediction(path: path, prediction: output.var_1285)
      }
      
+     
+     
      func createInput(_ url: URL) -> clip_vitb32Input?{
          switch url.pathExtension {
              case "svg":
@@ -57,8 +59,8 @@ import AppKit
                  return try? clip_vitb32Input(input_1At: url)
              }
              
-         }
      }
+ }
      
 
      

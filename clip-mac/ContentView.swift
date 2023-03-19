@@ -12,8 +12,7 @@ import CommonCrypto
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @StateObject var model : ContentModel = ContentModel()
-    let testImage :URL = Bundle.main.urlForImageResource("input")!
+    @StateObject var contentModel : ContentModel = ContentModel()
     let indexedEmbeddings : [MLMultiArray] = []
     private var columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
 
@@ -23,14 +22,14 @@ struct ContentView: View {
         ScrollView(.vertical){
             VStack{
                 Spacer()
-                Button((model.directory_path ?? "Pick Directory")) {
+                Button((contentModel.directory_path ?? "Pick Directory")) {
                     onPickDirectoryButtonTap()
                 }
-                Text(model.indexing_status ?? "" )
+                Text(contentModel.indexing_status ?? "" )
 
-                if( !model.top10Predictions.isEmpty){
+                if( !contentModel.predictions.isEmpty){
                     Text("Input Image")
-                    if let nsImage = NSImage(contentsOf: model.image_url ) {
+                    if let nsImage = NSImage(contentsOf: contentModel.image_url ) {
                         Image(nsImage: nsImage)
                             .resizable()
                             .frame(width: 200,height: 200.0)
@@ -43,19 +42,19 @@ struct ContentView: View {
                
 
                 LazyVGrid(columns:[GridItem(.adaptive(minimum: 200),spacing: 0)]){
-                    ForEach(model.top10Predictions){ sip in
+                    ForEach(contentModel.predictions.sorted(by: {$0.similarity > $1.similarity}),id: \.path){ imageModel in
                         VStack{
-                            if let nsImage = NSImage(contentsOf: URL(fileURLWithPath: sip.imagePrediction.path) ) {
+                            if let nsImage = NSImage(contentsOf: URL(fileURLWithPath: imageModel.path) ) {
                                 Image(nsImage: nsImage)
                                     .resizable()
                                     .frame(width: 200,height: 200.0)
                                     .onTapGesture(count:2) {
                                         let workspace = NSWorkspace.shared
-                                        let fileURL = URL(fileURLWithPath: sip.imagePrediction.path)
+                                        let fileURL = URL(fileURLWithPath: imageModel.path)
                                         workspace.activateFileViewerSelecting([fileURL])
                                     }.shadow(radius: 10)
-                                Text(sip.imagePrediction.path.replacingOccurrences(of: model.directory_path ?? " ", with: "")).textSelection(.enabled)
-                                Text(String(sip.similarity))
+                                Text(imageModel.path.replacingOccurrences(of: contentModel.directory_path ?? " ", with: "")).textSelection(.enabled)
+                                Text(String(imageModel.similarity))
                             }
                         }
                        
@@ -78,24 +77,10 @@ struct ContentView: View {
         if let provider = providers.first(where: { $0.canLoadObject(ofClass: URL.self) } ) {
             let _ = provider.loadObject(ofClass: URL.self) { object, error in
                 if let url = object {
-                    
                     DispatchQueue.main.async {
-                        model.image_url = url
-                        
-                        if( model.predictions != nil){
-                            let top10SIP = SimilarityService.getTopKSimilarImagePredictions(
-                                indexed_predictions: model.predictions ?? [],
-                                queryPrediction:  ModelManager.shared.predict(path: model.image_url.path),
-                                k: nil)
-                            
-                            model.top10Predictions = top10SIP
-                            
-                                    
-                        }
+                        contentModel.image_url = url
                     }
-                    
-                    
-                    
+                    updateResults()
                    
                 }
             }
@@ -113,7 +98,7 @@ struct ContentView: View {
             let result = dialog.url // Pathname of the file
             if(result == nil) {return}
             
-            model.directory_path = result!.path
+            contentModel.directory_path = result!.path
         }
     }
     
@@ -125,50 +110,29 @@ struct ContentView: View {
             let result = dialog.url // Pathname of the file
             if(result == nil) {return}
             
-            model.image_url = result!
+            contentModel.image_url = result!
             
-            if( model.predictions != nil){
-                let top10SIP = SimilarityService.getTopKSimilarImagePredictions(
-                    indexed_predictions: model.predictions ?? [],
-                    queryPrediction:  ModelManager.shared.predict(path: model.image_url.path),
-                    k: nil)
-                
-                model.top10Predictions = top10SIP
-//                            model.top10Predictions?.forEach{
-//                                model.indexing_status?.append($0.imagePrediction.path + "\n")
-//                            }
-                
+            updateResults()
+        }
+    }
+    
+    fileprivate func updateResults(){
+        DispatchQueue(label: "jainam.serial.onPickDirectoryButtonTap.queue").async {
+            let refreshedImageModels = refresh_cache(directory_path: contentModel.directory_path!)
+            let testImageModel = ImageModel(contentModel.image_url.path)
+            testImageModel.updatePrediction()
+            refreshedImageModels.forEach{$0.updateSimlarity(imageModel: testImageModel)}
+            DispatchQueue.main.async {
+                contentModel.predictions = refreshedImageModels
             }
         }
+        
     }
     
     fileprivate func onPickDirectoryButtonTap() {
         pickDirectory()
-        model.indexing_status = "Indexing Started"
-        DispatchQueue(label: "jainam.serial.onPickDirectoryButtonTap.queue").async {
-            
-            let predictions =  index_files(path: model.directory_path){ (progress,total) in
-                DispatchQueue.main.async {
-                    model.indexing_status = "Indexing : \(progress)/\(total)"
-                }
-            }
-            
-            DispatchQueue.main.async {
-                model.predictions = predictions
-                model.indexing_status = ""
-                
-               
-                let top10SIP = SimilarityService.getTopKSimilarImagePredictions(
-                    indexed_predictions: predictions,
-                    queryPrediction:  ModelManager.shared.predict(path: model.image_url.path),
-                    k: nil)
-                
-                model.top10Predictions = top10SIP
-
-                
-                
-            }
-        }
+        contentModel.indexing_status = "Indexing Started"
+        updateResults()
     }
 
     

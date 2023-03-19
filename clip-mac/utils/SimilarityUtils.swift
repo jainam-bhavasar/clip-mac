@@ -7,8 +7,51 @@
 
 import Foundation
 import CoreML
+import RealmSwift
+import CryptoKit
+
+class ImageModel : Object,Identifiable,Codable {
+    @Persisted(primaryKey: true) var fileHash : String
+    @Persisted var prediction : List<Double> = List()
+    var similarity : Double = 0.0
+    var path : String = ""
+    
+    convenience init(_ path : String) {
+        self.init()
+        self.path = path
+        let imageData = try! Data(contentsOf: URL(filePath: path))
+        self.fileHash = CryptoKit.SHA256.hash(data: imageData).description
+    }
+    
+    func updatePrediction(){
+        self.prediction =  ModelManager.shared.predict(path: self.path).prediction.RealmList
+    }
+    
+    func updateSimlarity(for inputPrediction : List<Double>) {
+        self.similarity =  self.prediction.dotProduct(inputPrediction) ?? 0
+    }
+    
+    func updateSimlarity(imageModel : ImageModel) {
+        self.similarity =  self.prediction.dotProduct(imageModel.prediction) ?? 0
+    }
+
+    static func == (left: ImageModel,right:ImageModel) -> Bool {
+        return left.hashValue == right.hashValue
+    }
+ 
+}
 
 
+
+extension List where Element == Double {
+    func dotProduct(_ other: List<Double>) -> Double? {
+        var dot = 0.0
+        for i in 0..<self.count {
+            dot += self[i]*other[i]
+        }
+        return dot
+    }
+}
 
 
 class SimilarityService{
@@ -19,7 +62,7 @@ class SimilarityService{
         }
         return sum
     }
-
+    
     fileprivate static func getSimilarityArray(indexed_enitities:[MLMultiArray],query_entity:MLMultiArray) -> [Double] {
         return indexed_enitities.map{entity in dot_product(entity, query_entity)}
     }
@@ -54,7 +97,5 @@ class SimilarityService{
         // Normalize each value in the array between 0 and 1
         return arr.map { ($0 - minVal) / (maxVal - minVal) }
     }
-
-    
     
 }
