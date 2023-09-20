@@ -8,13 +8,6 @@
 import Foundation
 import RealmSwift
 
-// Model
-
-
-
-
-// Database
-
 class FileHashDatabase {
     private var realm : Realm
 

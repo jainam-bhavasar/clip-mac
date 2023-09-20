@@ -38,12 +38,12 @@ import RealmSwift
       return model
    }
    
-     func predict(path:String) -> ImagePrediction {
+     func predict(path:String) -> MLMultiArray {
          let url = URL(fileURLWithPath: path).absoluteURL
         
          let input = createInput(url)
          let output :clip_vitb32Output = try! ModelManager.shared.model.prediction(input: input!)
-         return ImagePrediction(path: path, prediction: output.var_1285)
+         return output.var_1285
      }
      
      

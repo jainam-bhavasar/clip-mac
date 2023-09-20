@@ -23,7 +23,3 @@ func getImageUrls(inDirectory directoryPath: String) -> [URL] {
     return imagePaths.map{URL(filePath: $0)}
 }
 
-func getImages(inDirectory directoryPath : String)->[NSImage] {
-    let imagePaths = getImageUrls(inDirectory: directoryPath)
-    return imagePaths.map{NSImage(byReferencing: $0)}
-}

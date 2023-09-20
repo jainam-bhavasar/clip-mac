@@ -27,12 +27,13 @@ struct ContentView: View {
                 }
                 Text(contentModel.indexing_status ?? "" )
 
+                //Input image
                 if( !contentModel.predictions.isEmpty){
                     Text("Input Image")
                     if let nsImage = NSImage(contentsOf: contentModel.image_url ) {
                         Image(nsImage: nsImage)
                             .resizable()
-                            .frame(width: 200,height: 200.0)
+                            .frame(width: 150 , height: 150)
                             .onTapGesture(count:2){
                                 pickImage()
                             }
@@ -54,7 +55,7 @@ struct ContentView: View {
                                         workspace.activateFileViewerSelecting([fileURL])
                                     }.shadow(radius: 10)
                                 Text(imageModel.path.replacingOccurrences(of: contentModel.directory_path ?? " ", with: "")).textSelection(.enabled)
-                                Text(String(imageModel.similarity))
+                                Text(String(format: "%.2f", imageModel.similarity))
                             }
                         }
                        
@@ -78,10 +79,10 @@ struct ContentView: View {
             let _ = provider.loadObject(ofClass: URL.self) { object, error in
                 if let url = object {
                     DispatchQueue.main.async {
+                        if(!["svg","png","jpg","jpeg"].contains(url.pathExtension)) {return }
                         contentModel.image_url = url
                     }
                     updateResults()
-                   
                 }
             }
             return true
@@ -97,8 +98,9 @@ struct ContentView: View {
         if (dialog.runModal() ==  NSApplication.ModalResponse.OK) {
             let result = dialog.url // Pathname of the file
             if(result == nil) {return}
-            
             contentModel.directory_path = result!.path
+        }else {
+            return
         }
     }
     
@@ -109,29 +111,33 @@ struct ContentView: View {
         if (dialog.runModal() ==  NSApplication.ModalResponse.OK) {
             let result = dialog.url // Pathname of the file
             if(result == nil) {return}
-            
             contentModel.image_url = result!
-            
             updateResults()
         }
     }
     
     fileprivate func updateResults(){
         DispatchQueue(label: "jainam.serial.onPickDirectoryButtonTap.queue").async {
-            let refreshedImageModels = refresh_cache(directory_path: contentModel.directory_path!)
+            DispatchQueue.main.async {
+                contentModel.indexing_status = "Indexing Started"
+            }
+            let refreshedImageModels = refresh_cache(directory_path: contentModel.directory_path){(progress,total) in
+                DispatchQueue.main.async {
+                    self.contentModel.indexing_status = "Indexing \(progress)/\(total)"
+                }
+                }
             let testImageModel = ImageModel(contentModel.image_url.path)
             testImageModel.updatePrediction()
             refreshedImageModels.forEach{$0.updateSimlarity(imageModel: testImageModel)}
             DispatchQueue.main.async {
                 contentModel.predictions = refreshedImageModels
+                self.contentModel.indexing_status = ""
             }
         }
-        
     }
     
     fileprivate func onPickDirectoryButtonTap() {
         pickDirectory()
-        contentModel.indexing_status = "Indexing Started"
         updateResults()
     }
 

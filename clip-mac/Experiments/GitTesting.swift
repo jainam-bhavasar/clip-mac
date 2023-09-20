@@ -7,10 +7,7 @@
 
 import Foundation
 
-func gitTest(){
 
-   
-}
 
 func executeCommand(_ command: String) -> String? {
         let homeDir = FileManager.default.homeDirectoryForCurrentUser.path
